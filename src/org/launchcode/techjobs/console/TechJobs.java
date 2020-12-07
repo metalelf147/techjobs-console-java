@@ -3,6 +3,7 @@ package org.launchcode.techjobs.console;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.Map;
 
 /**
  * Created by LaunchCode
@@ -11,7 +12,7 @@ public class TechJobs {
 
     private static Scanner in = new Scanner(System.in);
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
 
         // Initialize our field map with key/name pairs
         HashMap<String, String> columnChoices = new HashMap<>();
@@ -61,7 +62,8 @@ public class TechJobs {
                 String searchTerm = in.nextLine();
 
                 if (searchField.equals("all")) {
-                    System.out.println("Search all fields not yet implemented.");
+                    //System.out.println("Search all fields not yet implemented.");
+                    printJobs(JobData.findByValue(searchField));
                 } else {
                     printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
                 }
@@ -82,7 +84,7 @@ public class TechJobs {
         for (String choiceKey : choices.keySet()) {
             choiceKeys[i] = choiceKey;
             i++;
-        }
+        } //for each loop
 
         do {
 
@@ -103,7 +105,7 @@ public class TechJobs {
                 validChoice = true;
             }
 
-        } while(!validChoice);
+        } while (!validChoice); //do while loop
 
         return choiceKeys[choiceIdx];
     }
@@ -111,6 +113,25 @@ public class TechJobs {
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
 
-        System.out.println("printJobs is not implemented yet");
+        if(someJobs.size() == 0) {
+            System.out.println("Yoinks, no jobs there right now. But this is a big country! Why not look somewhere else?");
+            return;
+        }
+
+        for(HashMap<String, String> hashMap : someJobs) {
+
+            System.out.println("**************");
+
+                for(String key : hashMap.keySet()) {
+                System.out.println(key + ": " + hashMap.get(key).toLowerCase());
+                }
+
+                System.out.println("**************\n");
+            }
+        }
     }
-}
+
+
+
+    // ISSUE ONE: search results not working for lowercase/capitalized letters " (ex search function - SEATTLE)
+// ISSUE TWO: core competency/skills
